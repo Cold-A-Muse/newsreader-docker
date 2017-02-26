@@ -51,7 +51,7 @@ def newsreader_post():
 def newsreader(text):
     cmd = ["bash", "/run_pipeline.sh"]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-    output, _err = p.communicate(text)
+    output, _err = p.communicate(text.encode("utf-8"))
     retcode = p.poll()
     if retcode:
         raise subprocess.CalledProcessError(retcode, cmd, output=output)
