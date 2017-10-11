@@ -1,0 +1,33 @@
+<html>
+  <head>
+  </head>
+  <body>
+  </body>
+  <h1>Newsreader pipeline vs 4.0 (Alpha).</h1>
+  <h2> API table </h2>
+  <table>
+    <tr><th>Tag</th><th>Style</th><th>Description</th></tr>
+    <tr><td>/</td><td>GET</td><td>This help text</td></tr>
+    <tr><td>/text/nl?text=text_to_parse</td><td>GET</td><td>Dutch plain text to NAF</td></tr>
+    <tr><td>/text/nl</td><td>POST</td><td>Dutch plain text to NAF</td></tr>
+    <tr><td>/text/en?text=text_to_parse</td><td>GET</td><td>English plain text to NAF</td></tr>
+    <tr><td>/text/en</td><td>POST</td><td>English plain text to NAF</td></tr>
+    <tr><td>/naf</td><td>POST</td><td>Raw NAF to annotated NAF</td></tr>
+  </table>
+  <h2> Form </h2>
+  <form action="/text/nl" method='get'>
+    Process a Dutch text:<br>
+    <input type='text' name='text'></br>
+    <input type='submit' value='submit'>
+  </form>
+  <form action="/text/en"  method='get'>
+    Process a English text:<br>
+    <input type='text' name='text'></br>
+    <input type='submit' value='submit'>
+  </form>
+  <form action="/naf" enctype="multipart/form-data" method='post'>
+    Upload a raw NAF file:<br>
+    <input type='file' name='naf'></br> 
+    <input type='submit' value='submit'>
+  </form>
+</html>

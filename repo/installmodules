@@ -1,0 +1,82 @@
+#!/bin/bash
+# installmodules -- Install the nlpp modules
+# installs modules in subdir nlppmodules of the directory from which this script is started.
+# Presupposes git
+# 20170905 Paul Huygen
+if
+    [ ! -z ${1+x} ]
+then
+    source $1
+fi
+# set -e
+modulesocket=/usr/local/nlpp
+modulesdir=${modulesocket}/nlppmodules
+mkdir -p $modulesdir
+secretrepodir='/repo/secretmodules'
+#secretrepodir=newsreader@kyoto.let.vu.nl:v4.0.0.0_nlpp_resources
+#secretkey=${pipesocket}/nrkey
+#echo key: ${secretkey} >&2
+
+function  install_from_git {
+  local modulename=$1
+  local url=$2
+  local commitid=$3
+  echo "Install $modulename from $url" >&2
+  cd ${modulesdir}
+  git clone ${url}
+  cd ${modulename}
+  git checkout ${commitid}
+  ./install
+  cd ${modulesocket}
+}
+
+function  install_from_repo {
+  local modulename=$1
+  local ball=$2
+  cd ${modulesdir}
+  if
+      [ -e $secretrepodir/$ball ]
+  then
+      echo "Install $modulename from $ball" >&2
+      tar -xzf ${secretrepodir}/${ball}
+#      rm ${ball}
+      cd ${modulename}
+      if
+	  [ -e install ]
+      then
+	  ./install
+      fi
+  else
+#      scp -i ${secretkey} ${secretrepodir}/${ball} .
+      echo "Not installing $modulename from $ball" >&2
+  fi
+  cd ${modulesocket}
+}
+
+#
+# Do the work
+#
+while
+  IFS=' ' read -ra args
+do
+    modulename="${args[0]}"
+    installmethod="${args[1]}"
+    if
+	[ -d ${modulesdir}/${modulename} ]
+    then
+	echo "Not re-installing existing ${modulename}" >&2
+	continue
+    fi
+    if
+	[ "${installmethod}" == "GIT" ]
+    then
+        url="${args[2]}"
+	commitset="${args[3]}"
+	install_from_git ${modulename} ${url} ${commitset}
+    else
+	ball="${args[2]}"
+	echo "Install $modulename from secret repo" >&2
+	install_from_repo ${modulename} ${ball}
+    fi
+done
+

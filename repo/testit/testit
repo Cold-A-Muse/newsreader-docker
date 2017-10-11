@@ -1,0 +1,45 @@
+#!/bin/bash
+# testit -- test newly installed pipeline
+# 20170907 Paul Huygen
+export thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+initscript=${thisdir}/conf
+source $initscript
+export MODROOT=/usr/local/nlpp/nlppmodules
+mkdir -p testen
+mkdir -p testnl
+res=0
+
+function runmodule {
+   local infile=$1
+   local modnam=$2
+   local outfile=$3
+   cat ${infile} | $MODROOT/${modnam}/run > ${outfile}
+   res=$?
+}
+
+
+# run_pipeline -- run the pipeline
+# args:
+# 1: directory to run the pipeline in
+# 2: input naf
+# 3: path to file with list of modules
+function run_pipeline {
+    local rundir=$1
+    local infile=$2
+    local modulelist=$3
+    local lastfile=$infile
+    cd $rundir
+    while
+	IFS=' ' read -r module || [[ -n "$module" ]]
+    do
+	echo "Annotate ${lastfile} with ${module}"
+	runmodule ${lastfile} ${module} ${module}.naf
+	lastfile=${module}.naf
+    done < ${modulelist}
+    ln -s ${lastfile} out.naf
+}
+
+export NAFLANG='en'
+run_pipeline ${thisdir}/testen ${thisdir}/test.en.in.naf ${thisdir}/modules.en
+export NAFLANG='nl'
+run_pipeline ${thisdir}/testnl ${thisdir}/test.nl.in.naf ${thisdir}/modules.nl

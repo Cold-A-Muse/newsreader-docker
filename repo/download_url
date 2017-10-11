@@ -1,0 +1,5 @@
+#!/bin/bash
+url=$1
+repodir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $repodir
+(wget $url) &
