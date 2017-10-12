@@ -1,5 +1,6 @@
 #!/bin/bash
-
+thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd ${thisdir}
 cat | ./nlpp
 # cat | text2naf -l $NAFLANG | nlpp
 # cat | text2naf -l $NAFLANG 

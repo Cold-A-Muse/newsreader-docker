@@ -82,12 +82,12 @@ def parse_naf():
  
 
 def the_form():
-    with open(os.path.join(server_dirname, 'form.html') as f:
+    with open(os.path.join(server_dirname, 'form.html')) as f:
         helptext = f.read()
     return helptext
 
 def text2naf(text, lang):
-    cmd = ["bash", os.path.join( bin__dirname, "text2anaf.sh"), lang]
+    cmd = ["bash", os.path.join( bin_dirname, "text2anaf.sh"), lang]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     output, _err = p.communicate(text.encode("utf-8"))
     retcode = p.poll()

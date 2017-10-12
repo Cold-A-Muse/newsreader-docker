@@ -4,9 +4,8 @@
 export thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 scriptname=${0##*/}
 scriptpath=$thisdir/$scriptname
-initscript="/home/huygen/projecten/pipelines/nlpp/progenv"
+initscript=${thisdir}/conf
 source $initscript
-export MODROOT=${thisdir}/nlppmodules
 res=0
 
 function get_language() {
@@ -51,7 +50,7 @@ function run_pipeline {
     while
 	IFS=' ' read -r module || [[ -n "$module" ]] >&2
     do
-	echo "Annotate ${lastfile} with ${module}"
+	echo "Annotate ${lastfile} with ${module}" >&2
 	runmodule ${lastfile} ${module} ${module}.naf
 	lastfile=${module}.naf
 	if
@@ -81,11 +80,11 @@ else
     if
 	[ "${NAFLANG}" == "en" ]
     then
-	run_pipeline ${thisdir}/modules.en
+	run_pipeline ${LIBDIR}/modules.en
     elif
 	[ "${NAFLANG}" == "nl" ]
     then
-	run_pipeline ${thisdir}/modules.nl
+	run_pipeline ${LIBDIR}/modules.nl
     else
 	echo "Cannot process docs in language " ${NAFLANG} >&2
     fi
