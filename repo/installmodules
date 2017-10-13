@@ -22,11 +22,11 @@ function  install_from_git {
   local url=$2
   local commitid=$3
   echo "Install $modulename from $url" >&2
-  cd ${modulesdir}
-  git clone ${url}
-  cd ${modulename}
-  git checkout ${commitid}
-  ./install
+    cd ${modulesdir}
+    git clone ${url}
+    cd ${modulename}
+    git checkout ${commitid}
+    ./install &>install.log
   cd ${modulesocket}
 }
 
@@ -39,12 +39,12 @@ function  install_from_repo {
   then
       echo "Install $modulename from $ball" >&2
       tar -xzf ${secretrepodir}/${ball}
-#      rm ${ball}
+#     rm ${ball}
       cd ${modulename}
       if
 	  [ -e install ]
       then
-	  ./install
+	  ./install &>./install.log
       fi
   else
 #      scp -i ${secretkey} ${secretrepodir}/${ball} .
@@ -59,7 +59,7 @@ function  install_from_repo {
 while
   IFS=' ' read -ra args
 do
-    modulename="${args[0]}"
+    export modulename="${args[0]}"
     installmethod="${args[1]}"
     if
 	[ -d ${modulesdir}/${modulename} ]
@@ -70,13 +70,17 @@ do
     if
 	[ "${installmethod}" == "GIT" ]
     then
-        url="${args[2]}"
-	commitset="${args[3]}"
-	install_from_git ${modulename} ${url} ${commitset}
+        export url="${args[2]}"
+	export commitset="${args[3]}"
+	( install_from_git ${modulename} ${url} ${commitset} ) &
     else
-	ball="${args[2]}"
+	export ball="${args[2]}"
 	echo "Install $modulename from secret repo" >&2
-	install_from_repo ${modulename} ${ball}
+	( install_from_repo ${modulename} ${ball} ) &
     fi
 done
+wait
+cd ${modulesdir}/EHU-srl-server
+( ./run-server.sh ) &
+sleep 30
 

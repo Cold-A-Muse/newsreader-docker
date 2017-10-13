@@ -1,0 +1,15 @@
+ixa-pipe-tok                 
+ixa-pipe-topic               
+morphosyntactic_parser_nl    
+ixa-pipe-nerc                
+svm_wsd                      
+ixa-pipe-ned                 
+entity-relink-pipeline       
+ixa-pipe-time                
+OntoTagger                   
+vua-srl-nl                   
+Nominal_Events               
+vua-srl-dutch-nominal-events 
+Framenet_SRL                 
+multilingual_factuality      
+EventCoreference

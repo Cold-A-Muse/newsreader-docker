@@ -14,7 +14,7 @@ OntoTagger                   GIT  https://github.com/PaulHuygen/OntoTagger.git 3
 vua-srl-nl                   GIT  https://github.com/PaulHuygen/vua-srl-nl.git 9066185f4538543e887a1f61b679967cbe6eaeb8
 vua-srl-dutch-nominal-events GIT  https://github.com/PaulHuygen/vua-srl-dutch-nominal-events.git fcf3985e1ee380ba5392c3532c9e6d0f243d8247
 multilingual_factuality      GIT  https://github.com/PaulHuygen/multilingual_factuality.git 1f47e7bf4c584f8d5b4b74a0c5489ba28d15f37b
-EventCoreference             GIT  https://github.com/PaulHuygen/EventCoreference.git 5c3ec554eb3c5a56c448b804f2047ab7e91a82d4
+EventCoreference             GIT  https://github.com/PaulHuygen/EventCoreference.git af02348770dde4fe22a5fbee53a891a122e8295d
 EHU-ukb.v30                  SEC  20171004_EHU-ukb.v30.tgz
 it_makes_sense_WSD           GIT  https://github.com/PaulHuygen/it_makes_sense_WSD.git f1d7a6f089cc10762a50a008cabee458b3db2500
 EHU-corefgraph.v30           SEC  20171005_EHU-corefgraph.v30.tgz

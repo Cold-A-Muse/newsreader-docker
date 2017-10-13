@@ -7,4 +7,4 @@ ADD ./repo ./repo
 RUN ./repo/installbackground
 RUN ./repo/installmodules < ./repo/modulelist
 
-CMD python /usr/local/nlpp/server/server.py --host 0.0.0.0 --port 5002 --debug
+CMD python /usr/local/nlpp/server/server.py --host 0.0.0.0 --port 5002 
