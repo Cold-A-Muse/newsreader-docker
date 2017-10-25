@@ -128,7 +128,4 @@ do
     fi
 done
 wait
-cd ${modulesdir}/EHU-srl-server
-( ./run-server.sh ) &
-sleep 30
 
