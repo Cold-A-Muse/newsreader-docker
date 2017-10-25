@@ -43,7 +43,7 @@ as a "raw" naf and obtain a NAF file with the annotated text.
    ready-to-use API. However, things do not go well yet, so a new
    container has to be started. So, when the build process is ready,
    perform `docker run -i -p 5002:5002 -t newsreader-docker
-   /bin/bash`. When this goes well you en up with a command-line
+   /bin/bash`. When this goes well you end up with a command-line
    interface to the docker container.
 5. One of the modules can currently only be run in server mode. Tot start
    the server, perform
@@ -54,7 +54,7 @@ as a "raw" naf and obtain a NAF file with the annotated text.
 ## Usage
 
 When the server runs, load URL `http://localhost:5002` in your
-browser. This results in a page that list the supperted API calls and that
+browser. This results in a page that lists the supperted API calls and that
 enables to type in and submit a Dutch or English text or to upload a "raw"
 NAF file. When all goes well, after seconds or a few minutes the NAF
 file with the annotated text will appear. 
