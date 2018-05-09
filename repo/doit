@@ -1,6 +1,7 @@
 #!/bin/bash
 thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $thisdir/source
+cp ${thisdir}/nrkey ~/
 # Install
 apt-get install apt-transport-https
 apt-get install git
