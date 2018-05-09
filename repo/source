@@ -1,0 +1,2 @@
+export newsreader_installer_dir="nlpp_ubuntu_16.04"
+export newsreader_installer_url="https://github.com/PaulHuygen/nlpp_ubuntu_16.04.git"
