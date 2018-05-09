@@ -17,18 +17,66 @@ secretrepodir='/repo/secretmodules'
 #secretkey=${pipesocket}/nrkey
 #echo key: ${secretkey} >&2
 
-function  install_from_git {
-  local modulename=$1
-  local url=$2
-  local commitid=$3
-  echo "Install $modulename from $url" >&2
+# Occasionally cloning from git fails, but the failure is not reproducible. Therefore, repeat cloning if it fails.
+
+# Clone from Github and perform install script in the root dir of the clone
+# Github cloning may fail occasionally. Therefore, retry (max. maxtrials times) if it fails.
+# Args:
+# reponame: name of reposistory (module)
+# repourl: Github url of the repository
+# commitset: commitset of the version of the module that we need.
+function install_from_git () {
+    local reponame=$1
+    local repourl=$2
+    local commitset=$3
+    local maxtrials=10
+    local res=0
+    local trial=0
+    local go_on=0
     cd ${modulesdir}
-    git clone ${url}
-    cd ${modulename}
-    git checkout ${commitid}
-    ./install &>install.log
-  cd ${modulesocket}
+    while
+	[ $go_on == 0 ]
+    do
+ 	git clone $repourl
+	res=$?
+	if
+	    [ $res == 0 ]
+	then
+	    cd $reponame
+	    git checkout $commitset
+	    if
+		[ -x "./install" ]
+	    then
+		./install
+	    fi
+	    go_on=1
+	else
+	    trial=$((trial+1))
+	    if
+		[ $trial -ge $maxtrials ]
+	    then
+		go_on=1
+		echo "GIT FAIL: cloning of $repourl failed $maxtrials times" >&2
+	    fi
+	fi
+    done
+    cd ${modulesdir}
 }
+
+
+#function  install_from_git {
+#  local modulename=$1
+#  local url=$2
+#  local commitid=$3
+#  echo "Install $modulename from $url" >&2
+#  cd ${modulesdir}
+#  clone_githup_repo $modulename $url $commitid
+#    git clone ${url}
+#    cd ${modulename}
+#    git checkout ${commitid}
+#    ./install &>install.log
+#  cd ${modulesocket}
+#}
 
 function  install_from_repo {
   local modulename=$1
@@ -80,7 +128,4 @@ do
     fi
 done
 wait
-cd ${modulesdir}/EHU-srl-server
-( ./run-server.sh ) &
-sleep 30
 

@@ -5,5 +5,11 @@ EXPOSE 5002
 ADD ./repo ./repo
 
 RUN ./repo/doit
+# RUN ./repo/installbackground
+# RUN ./repo/installmodules < ./repo/modulelist
+## ENTRYPOINT ["python"]
+# CMD ["/usr/local/nlpp/server/server.py", "--host 0.0.0.0" "--port 5002"]
+WORKDIR /usr/local/nlpp/server
+CMD /usr/local/nlpp/server/doit
+# CMD python /usr/local/nlpp/server/server.py
 
-CMD python /usr/local/nlpp/server/server.py --host 0.0.0.0 --port 5002 

@@ -1,3 +1,4 @@
+vua-resources                GIT  https://github.com/cltl/vua-resources.git e730ce672f2a13457393028b679e9147334c490e
 ixa-pipe-tok                 GIT  https://github.com/PaulHuygen/ixa-pipe-tok.git 1a5b0f76e13315f9a1a75525e93d0789ccf9383c
 ixa-pipe-topic               GIT  https://github.com/PaulHuygen/ixa-pipe-topic.git 0a059c6583b70dd315027dad1140c362d0e31bc1
 ixa-pipe-pos                 GIT  https://github.com/PaulHuygen/ixa-pipe-pos.git f6de665c2b155828e9ca4d30b38451c5faaaeb9c
@@ -10,7 +11,7 @@ ixa-pipe-wikify              GIT  https://github.com/PaulHuygen/ixa-pipe-wikify.
 entity-relink-pipeline       GIT  https://github.com/PaulHuygen/entity-relink-pipeline.git b346b129211e7b68fc661227b6e6e3cc55bccc0e
 NWRDomainModel               GIT  https://github.com/PaulHuygen/NWRDomainModel.git 6af97d8e25e451654af2a889561a78a1313ad66d
 ixa-pipe-time                GIT  https://github.com/PaulHuygen/ixa-pipe-time.git 76eed04f7332c41e289ca97b8ddec604235291bb
-OntoTagger                   GIT  https://github.com/PaulHuygen/OntoTagger.git 31b0554d22e3a38f980086cfc7c4627d425344e9
+OntoTagger                   GIT  https://github.com/PaulHuygen/OntoTagger.git c4c11820d53c51b1842eba8814fd242c539dc760
 vua-srl-nl                   GIT  https://github.com/PaulHuygen/vua-srl-nl.git 9066185f4538543e887a1f61b679967cbe6eaeb8
 vua-srl-dutch-nominal-events GIT  https://github.com/PaulHuygen/vua-srl-dutch-nominal-events.git fcf3985e1ee380ba5392c3532c9e6d0f243d8247
 multilingual_factuality      GIT  https://github.com/PaulHuygen/multilingual_factuality.git 1f47e7bf4c584f8d5b4b74a0c5489ba28d15f37b

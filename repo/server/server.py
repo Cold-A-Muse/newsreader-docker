@@ -106,18 +106,19 @@ def naf2naf(innaf):
 
 
 if __name__ == '__main__':
-    import argparse
-    import tempfile
+    app.run(port=5002, host="0.0.0.0", debug=True)
+#    import argparse
+#    import tempfile
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--port", "-p", type=int, default=5002,
-                        help="Port number to listen to (default: 5001)")
-    parser.add_argument("--host", "-H", help="Host address to listen on (default: localhost)")
-    parser.add_argument("--debug", "-d", help="Set debug mode", action="store_true")
-    args = parser.parse_args()
+#    parser = argparse.ArgumentParser()
+#    parser.add_argument("--port", "-p", type=int, default=5002,
+#                        help="Port number to listen to (default: 5001)")
+#    parser.add_argument("--host", "-H", help="Host address to listen on (default: localhost)")
+#    parser.add_argument("--debug", "-d", help="Set debug mode", action="store_true")
+#    args = parser.parse_args()
 
-#    logging.basicConfig(level=logging.DEBUG if (args.debug or args.verbose) else logging.INFO,
-    logging.basicConfig(level=logging.DEBUG if (args.debug) else logging.INFO,
-                        format='[%(asctime)s %(name)-12s %(levelname)-5s] %(message)s')
-
-    app.run(port=args.port, host=args.host, debug=args.debug)
+##    logging.basicConfig(level=logging.DEBUG if (args.debug or args.verbose) else logging.INFO,
+#    logging.basicConfig(level=logging.DEBUG if (args.debug) else logging.INFO,
+#                        format='[%(asctime)s %(name)-12s %(levelname)-5s] %(message)s')
+#
+#    app.run(port=args.port, host=args.host, debug=args.debug)
