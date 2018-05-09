@@ -1,4 +1,6 @@
 #!/bin/bash
+thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $thisdir/source
 # Install
 apt-get install apt-transport-https
 apt-get install git
