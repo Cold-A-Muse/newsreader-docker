@@ -1,0 +1,12 @@
+#!/bin/bash
+# generate a Docker container with the newsreader-pipeline.
+# 20180509 Paul Huygen
+thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd ${thisdir}
+if
+ [ ! -e ${thisdir}/repo/nrkey ]
+then
+ echo "Please get repo/nrkey"
+ exit 4
+fi
+docker build -t newsreader-docker

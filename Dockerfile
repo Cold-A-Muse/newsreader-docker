@@ -4,7 +4,6 @@ MAINTAINER Paul Huygen (paul.huygen@huygen.nl)
 EXPOSE 5002
 ADD ./repo ./repo
 
-RUN ./repo/installbackground
-RUN ./repo/installmodules < ./repo/modulelist
+RUN ./repo/doit
 
 CMD python /usr/local/nlpp/server/server.py --host 0.0.0.0 --port 5002 
