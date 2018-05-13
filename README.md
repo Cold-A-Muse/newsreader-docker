@@ -13,7 +13,7 @@ of the pipeline. It addresses the following issues:
 
 1. To build the pipeline from open-source components that can be
    freely downloaded from Internet.
-2. To ensure reproducability of the annotion process i.e. to enable to
+2. To ensure reproducibility of the annotion process i.e. to enable to
    rebuild an identical pipeline in some point in the future.
 3. To standardize the installation and use of the modules.
 
@@ -34,11 +34,11 @@ as a "raw" naf and obtain a NAF file with the annotated text.
 ## Installation
 
 1. Clone this repository.
-2. Some of the modules are not yet open-source. Contact the author to
-   obtain the source of these modules and include them in the
-   downloaded directory.
-3. Build the image: CD to newsreader-docker and perform 
-   `docker build -t newsreader-docker`.
+2. Some of the modules are not yet open-source. Therefore you need a
+   key in file `nrkey`. Contact the author to obtain this key and
+   place it in the `newsreader-docker/repo` directory.
+3. Build the image: `cd` to `newsreader-docker` and perform 
+   `./doit`.
 4. When al goes well, this would result in a running container with a
    ready-to-use API. However, things do not go well yet, so a new
    container has to be started. So, when the build process is ready,
@@ -54,7 +54,7 @@ as a "raw" naf and obtain a NAF file with the annotated text.
 ## Usage
 
 When the server runs, load URL `http://localhost:5002` in your
-browser. This results in a page that lists the supperted API calls and that
+browser. This results in a page that lists the supported API calls and that
 enables to type in and submit a Dutch or English text or to upload a "raw"
 NAF file. When all goes well, after seconds or a few minutes the NAF
 file with the annotated text will appear. 

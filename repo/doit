@@ -3,12 +3,13 @@ thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $thisdir/source
 cp ${thisdir}/nrkey ~/
 # Install
-apt-get install apt-transport-https
-apt-get install git
+apt-get -y update
+apt-get -y upgrade
+apt-get -y install apt-transport-https
+apt-get -y install git
 cd ~/
 git clone ${newsreader_installer_url}
 cd ${newsreader_installer_dir}
 ./install
-cd ~/newsreader_installer_url}
 cd ${newsreader_installer_dir}/test
 ./testit
