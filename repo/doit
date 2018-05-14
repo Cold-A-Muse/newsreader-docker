@@ -11,5 +11,5 @@ cd ~/
 git clone ${newsreader_installer_url}
 cd ${newsreader_installer_dir}
 ./install
-cd ${newsreader_installer_dir}/test
-./testit
+#cd ~/${newsreader_installer_dir}/test
+#./testit

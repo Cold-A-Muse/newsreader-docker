@@ -5,6 +5,6 @@ EXPOSE 5002
 ADD ./repo ./repo
 WORKDIR ./repo
 RUN ./doit
-CMD startservers
+CMD ./startservers
 
 
