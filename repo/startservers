@@ -5,7 +5,7 @@ source $thisdir/source
 #
 # Start the srl-server
 #
-./run_srl_server &
+/root/run_srl_server &
 cd $thisdir/server
 python ./server.py &
 
