@@ -5,7 +5,7 @@ source $thisdir/source
 #
 # Start the srl-server
 #
-/root/run_srl_server &
+/root/nlpp_ubuntu_16.04/run_srl_server &
 cd $thisdir/server
 python ./server.py &
 
