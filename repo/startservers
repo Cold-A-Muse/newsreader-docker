@@ -7,7 +7,7 @@ source $thisdir/source
 #
 ./run_srl_server &
 cd $thisdir/server
-python /usr/local/nlpp/server/server.py &
+python ./server.py &
 
 # Naive check runs checks once a minute to see if either of the processes exited.
 # This illustrates part of the heavy lifting you need to do if you want to run

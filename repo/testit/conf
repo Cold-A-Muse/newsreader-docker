@@ -1,5 +1,0 @@
-export MODROOT=/usr/local/nlpp/nlppmodules
-export SPOTLIGHTHOST=130.37.53.33
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
