@@ -18,7 +18,7 @@ python ./server.py &
 while sleep 60; do
   lsof -i:${srl_port} &> /dev/null
   PROCESS_1_STATUS=$?
-  lsof -i:80 &> /dev/null
+  lsof -i:${flask_port} &> /dev/null
   PROCESS_2_STATUS=$?
   if [ $PROCESS_1_STATUS -ne 0 -o $PROCESS_2_STATUS -ne 0 ]; then
     echo "One of the processes has already exited."
