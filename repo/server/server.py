@@ -43,8 +43,7 @@ def parse_text_arg(lang):
 #    output = request.args.get('output', "dependencies")
     if not text:
         return the_form(), 400
-    in_naf = text2naf(text, lang)
-    result = naf2naf(in_naf)
+    result = text2naf(text, lang)
     return Response(result, mimetype='text/xml')
 
 @app.route('/text/<lang>', methods=['POST'])
@@ -53,8 +52,7 @@ def parse_text_arg_post(lang):
         return "Cannot process language {}".format(lang), 400
     body = request.get_json(force=True)
     text = body['text']
-    in_naf = text2naf(text, lang)
-    result = naf2naf(in_naf)
+    result = text2naf(text, lang)
     return Response(result, mimetype='text/xml')
 
 
@@ -66,8 +64,7 @@ def parse_text_url(lang, text):
 #    output = request.args.get('output', "dependencies")
     if not text:
         return "Usage: /text/lang/text", 400
-    in_naf = text2naf(text, lang)
-    result = naf2naf(in_naf)
+    result = text2naf(text, lang)
     return Response(result, mimetype='text/xml')
 
 
