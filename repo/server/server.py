@@ -1,7 +1,13 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 """
-Very simple web server for Newsreader
+Very simple web server for Newsreader:
+/                 GET   Generate a form.
+/text/            GET   idem.
+/text/<lang>      GET   Process text in argument or generate form.
+/text/<lang>/text GET   Process "text"
+/text/<lang>      POST  Process text in argument.
+/naf              POST  Process argument as input naf.
 """
 
 import sys
@@ -37,7 +43,8 @@ def parse_text_arg(lang):
 #    output = request.args.get('output', "dependencies")
     if not text:
         return the_form(), 400
-    result = text2naf(text, lang)
+    in_naf = text2naf(text, lang)
+    result = naf2naf(in_naf)
     return Response(result, mimetype='text/xml')
 
 @app.route('/text/<lang>', methods=['POST'])
@@ -46,7 +53,8 @@ def parse_text_arg_post(lang):
         return "Cannot process language {}".format(lang), 400
     body = request.get_json(force=True)
     text = body['text']
-    result = text2naf(text, lang)
+    in_naf = text2naf(text, lang)
+    result = naf2naf(in_naf)
     return Response(result, mimetype='text/xml')
 
 
@@ -58,7 +66,8 @@ def parse_text_url(lang, text):
 #    output = request.args.get('output', "dependencies")
     if not text:
         return "Usage: /text/lang/text", 400
-    result = text2naf(text, lang)
+    in_naf = text2naf(text, lang)
+    result = naf2naf(in_naf)
     return Response(result, mimetype='text/xml')
 
 
@@ -96,7 +105,7 @@ def text2naf(text, lang):
     return output
 
 def naf2naf(innaf):
-    cmd = ["bash", os.path.join( bin_dirname, "nlpp")]
+    cmd = ["bash", "nlpp")]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     output, _err = p.communicate(str(innaf).encode("utf-8"))
     retcode = p.poll()
