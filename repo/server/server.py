@@ -105,7 +105,7 @@ def text2naf(text, lang):
     return output
 
 def naf2naf(innaf):
-    cmd = ["bash", "nlpp")]
+    cmd = ["bash", "nlpp"]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     output, _err = p.communicate(str(innaf).encode("utf-8"))
     retcode = p.poll()
