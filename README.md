@@ -39,17 +39,10 @@ as a "raw" naf and obtain a NAF file with the annotated text.
    place it in the `newsreader-docker/repo` directory.
 3. Build the image: `cd` to `newsreader-docker` and perform 
    `./doit`.
-4. When al goes well, this would result in a running container with a
-   ready-to-use API. However, things do not go well yet, so a new
-   container has to be started. So, when the build process is ready,
-   perform `docker run -i -p 5002:5002 -t newsreader-docker
-   /bin/bash`. When this goes well you end up with a command-line
-   interface to the docker container.
-5. One of the modules can currently only be run in server mode. Tot start
-   the server, perform
-   `/usr/local/nlpp/nlppmodules/EHU-srl-server/run-server.sh`.
-6. When the server runs, start the web-server.
-   Do `python /usr/local/nlpp/server/server.py --host 0.0.0.0 --port 5002 --debug`.
+4. When al goes well, this results in a docker image with a
+   ready-to-use API. To run a container with this image,
+   perform `docker run -i -p 5002:5002 -t newsreader-docker`.
+
 
 ## Usage
 
