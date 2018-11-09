@@ -2,6 +2,8 @@
 # set -e
 # set -o pipefail
 thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+nlppdir="/root/nlpp_ubuntu_16.04"
+nlppcommand=${nlppdir}/run/
 export NAFLANG=$1
 cd ${thisdir}
 # cat | nlpp

@@ -17,8 +17,10 @@ def eprint(*args, **kwargs):
 import os
 
 server_dirname = os.path.dirname(os.path.realpath(sys.argv[0]))
-nlpp_dirname = os.path.dirname(server_dirname)
-bin_dirname = os.path.join(nlpp_dirname, "bin")
+server_socket = os.path.dirname(server_dirname)
+bin_dirname = os.path.join(server_socket, "bin")
+nlpp_dirname = "/root/nlpp_ubuntu_16.04"
+nlpp_command = os.path.join( nlpp_dirname, "nlpp")
 
 import subprocess
 import tempfile
@@ -102,7 +104,7 @@ def text2naf(text, lang):
     return output
 
 def naf2naf(innaf):
-    cmd = ["bash", "nlpp"]
+    cmd = ["bash", nlpp_command]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
     output, _err = p.communicate(str(innaf).encode("utf-8"))
     retcode = p.poll()

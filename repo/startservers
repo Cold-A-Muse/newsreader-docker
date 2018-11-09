@@ -1,13 +1,62 @@
 #!/bin/bash
+# 20181029 Do no longer bother about srl-server.
 thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $thisdir/source
 
 #
 # Start the srl-server
 #
-/root/nlpp_ubuntu_16.04/run_srl_server &
-cd $thisdir/server
-python ./server.py &
+function start_srl_server () {
+  /root/nlpp_ubuntu_16.04/run_srl_server &
+}
+
+#
+# Start the Flask server
+#
+function start_flask () {
+    cd $thisdir/server
+    python ./server.py &
+}
+
+
+function check_restart_server () {
+    server_name=$1
+    server_port=$2
+    lsof -i:${server_port} &> /dev/null
+    PROCESS_STATUS=$?
+    if
+      [ $PROCESS_STATUS -ne 0 ]
+    then
+      echo "Server $server_name has exited. restarting ..."
+      if
+	  [ $server_name == "srl" ]
+      then
+	  start_srl_server
+      else
+	  start_flask
+      fi
+      
+    fi
+}
+
+function check_restart_srl_server () {
+  lsof -i:${srl_port} &> /dev/null
+  PROCESS_STATUS=$?
+  if
+      [ PROCESS_STATUS -ne 0 ]
+  then
+      echo "SRL-server has exited. restarting ..."
+      start_srl_server
+  fi
+}
+
+
+start_srl_server
+start_flask
+
+#/root/nlpp_ubuntu_16.04/run_srl_server &
+#cd $thisdir/server
+#python ./server.py &
 
 # Naive check runs checks once a minute to see if either of the processes exited.
 # This illustrates part of the heavy lifting you need to do if you want to run
@@ -16,11 +65,11 @@ python ./server.py &
 # Otherwise it loops forever, waking up every 60 seconds
 
 while sleep 60; do
-  lsof -i:${srl_port} &> /dev/null
-  PROCESS_1_STATUS=$?
+#  lsof -i:${srl_port} &> /dev/null
+#  PROCESS_1_STATUS=$?
   lsof -i:${flask_port} &> /dev/null
   PROCESS_2_STATUS=$?
-  if [ $PROCESS_1_STATUS -ne 0 -o $PROCESS_2_STATUS -ne 0 ]; then
+  if [ $PROCESS_2_STATUS -ne 0 ]; then
     echo "One of the processes has already exited."
     exit 1
   fi
