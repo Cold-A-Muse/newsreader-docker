@@ -1,0 +1,24 @@
+vua-resources                GIT  https://github.com/cltl/vua-resources.git e730ce672f2a13457393028b679e9147334c490e
+ixa-pipe-tok                 GIT  https://github.com/PaulHuygen/ixa-pipe-tok.git 6f030219c5b7c077ec3ac32c8eb4682ee1e8e766
+ixa-pipe-topic               GIT  https://github.com/PaulHuygen/ixa-pipe-topic.git c511087de81941f81fc9e066e9d00e7f3493ff24
+ixa-pipe-pos                 GIT  https://github.com/PaulHuygen/ixa-pipe-pos.git f6de665c2b155828e9ca4d30b38451c5faaaeb9c
+ixa-pipe-parse               GIT  https://github.com/PaulHuygen/ixa-pipe-parse.git bf8e91f829e963fe16684a12ad241f8b1aab251d
+ixa-pipe-nerc                GIT  https://github.com/PaulHuygen/ixa-pipe-nerc.git 2c23270d1830035b10f5001b533b8619f5ff42d7
+svm_wsd                      GIT  https://github.com/PaulHuygen/svm_wsd.git e7730cfe8b96799b8297d0431b183465c5f4fa0e 
+ixa-pipe-ned                 GIT  https://github.com/PaulHuygen/ixa-pipe-ned.git 65f7f3352759d820b8e3332819b4dc295aa0eb9d
+ixa-pipe-wikify              GIT  https://github.com/PaulHuygen/ixa-pipe-wikify.git 1bd1b68205ec39ba463a216aa49fddcfaf239b1a
+entity-relink-pipeline       GIT  https://github.com/PaulHuygen/entity-relink-pipeline.git b346b129211e7b68fc661227b6e6e3cc55bccc0e
+NWRDomainModel               GIT  https://github.com/PaulHuygen/NWRDomainModel.git 6af97d8e25e451654af2a889561a78a1313ad66d
+ixa-pipe-time                GIT  https://github.com/PaulHuygen/ixa-pipe-time.git 76eed04f7332c41e289ca97b8ddec604235291bb
+OntoTagger                   GIT  https://github.com/PaulHuygen/OntoTagger.git c4c11820d53c51b1842eba8814fd242c539dc760
+multilingual_factuality      GIT  https://github.com/PaulHuygen/multilingual_factuality.git 1f47e7bf4c584f8d5b4b74a0c5489ba28d15f37b
+EventCoreference             GIT  https://github.com/PaulHuygen/EventCoreference.git 1f5125331528c1c57998cc2728703dcbef32cea2
+ixa-pipe-srl		     GIT  https://github.com/PaulHuygen/ixa-pipe-srl.git dcfb00a47101eddba0d0297842609bf8d7a1598e
+EHU-ukb.v30                  SEC  20171004_EHU-ukb.v30.tgz
+it_makes_sense_WSD           GIT  https://github.com/PaulHuygen/it_makes_sense_WSD.git cd40010771d0e3264d3897385f6b333cd9ab3701
+EHU-corefgraph.v30           SEC  20171005_EHU-corefgraph.v30.tgz
+FBK-time.v30                 SEC  20170831_FBK-time.v30.tgz
+FBK-temprel.v30              SEC  20170831_FBK-temprel.v30.tgz
+FBK-causalrel.v30            SEC  20170816_FBK-causalrel.v30.tgz
+vua_factuality               GIT  https://github.com/PaulHuygen/vua_factuality.git 412f9917eb7a6e395c05af84abfc7d47aa12e825
+opinion_miner_deluxePP	     GIT  https://github.com/PaulHuygen/opinion_miner_deluxePP.git fb9072501f6fe2ae029a7381339541fc7c705e6c

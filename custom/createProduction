@@ -1,0 +1,71 @@
+#!/bin/bash
+# Gathers all files necessary to run production version of NewsReader NLP pipeline
+# Cleaning up for the following modules:
+#ixa-pipe-tok (check)
+#ixa-pipe-topic (check)
+#ixa-pipe-pos (check)
+#ixa-pipe-parse 
+#ixa-pipe-nerc (check)
+#svm_wsd
+#ixa-pipe-ned (check)
+#entity-relink-pipeline
+#NWRDomainModel (check)
+#ixa-pipe-wikify (check)
+#EHU-ukb.v30
+#it_makes_sense_WSD (check)
+#EHU-corefgraph.v30
+#ixa-pipe-srl
+#FBK-time.v30
+#FBK-temprel.v30
+#FBK-causalrel.v30
+#EventCoreference (check)
+#vua_factuality (check)
+#opinion_miner_deluxePP
+
+
+# ixa-pipe-tok
+RUN cp ./nlppmodules/ixa-pipe-tok/ixa-pipe-tok-2.0.0-exec.jar ../production/ixa-pipe-tok-2.0.0-exec.jar
+
+# ixa-pipe-pos
+RUN for i in ixa-pipe-pos-1.5.2-exec.jar morph-models-1.5.0 trainParams.properties ud-morph-models-1.5.0; do cp -r ./nlppmodules/ixa-pipe-pos/$i ../production/$i; done
+
+# ixa-pipe-parse
+RUN for i in ixa-pipe-parse-1.1.2.jar parse-models; do cp -r ./nlppmodules/ixa-pipe-parse/$i ../production/$i; done
+
+
+# ixa-pipe-topic
+RUN for i in ixa-pipe-topic-1.0.3.jar default.prop jex lib repo; do cp -r ./nlppmodules/ixa-pipe-topic/$i ../production/$i; done
+
+# ixa-pipe-topic
+RUN for i in ixa-pipe-nerc-1.6.1-exec.jar nerc-models-1.5.4/en trainParams.properties; do cp -r ./nlppmodules/ixa-pipe-nerc/$i ../production/$i; done
+
+
+#ixa-pipe-topic
+RUN for i in ixa-pipe-ned-1.1.6.jar lib; do cp -r ./nlppmodules/ixa-pipe-ned/$i ../production/$i; done
+
+#ixa-pipe-wikify
+RUN for i in COPYING dbpedia-spotlight-0.7.jar ixa-pipe-wikify-1.4.0.jar; do cp -r ./nlppmodules/ixa-pipe-wikify/$i ../production/$i; done
+
+#vu-entity-relink
+RUN cp -r ./ ../production/entity-relink-pipeline
+
+#vu-NWRDomainModel
+RUN cp -r ./ ../production/NWRDomainModel
+
+#vu-event-coreference
+RUN for i in clean lib scripts usage; do cp -r ./nlppmodules/EventCoreference/$i ../production/$i; done
+
+#ixa-pipe-srl (gotta still check)
+RUN cp -r ./ ../production/ixa-pipe-srl
+
+#vu-ims-wsd
+RUN cp -r ./ ../production/it_makes_sense_WSD
+
+#vua-factuality
+
+RUN cp -r ./ ../production/vua_factuality
+
+
+
+
+echo "Gather production files finished"

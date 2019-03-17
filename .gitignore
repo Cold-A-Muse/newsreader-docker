@@ -9,6 +9,7 @@ __pycache__/
 # C extensions
 *.so
 
+repo/nrkey
 
 # Emacs meuk 
 *~

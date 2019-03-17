@@ -10,6 +10,7 @@ apt-get -y install git lsof
 cd ~/
 git clone ${newsreader_installer_url}
 cd ${newsreader_installer_dir}
-./install
+
+readlink -f ./install 
 #cd ~/${newsreader_installer_dir}/test
 #./testit

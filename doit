@@ -9,4 +9,4 @@ then
  echo "Please get repo/nrkey"
  exit 4
 fi
-docker build -t newsreader-docker:latest .
+docker build -t newsreader-docker-forked:latest .

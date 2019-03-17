@@ -1,0 +1,58 @@
+#!/bin/bash
+# Install the newsreader pipeline on a fresh Ubuntu 16.04.
+res=0
+
+function update_res () {
+    tres=$1
+    if
+	[ $tres -gt 0 ]
+    then
+	res=tres
+    fi
+    
+}
+
+function handle_failure () {
+    errmess=$1
+    if
+	[ $res -gt 0 ]
+    then
+	echo $errmess >&2
+	exit 4
+    fi
+}
+
+function runsudo () {
+    which sudo
+    tres=$?
+    if
+	[ $tres -gt 0 ]
+    then
+	$1
+	update_res $?
+    else
+	sudo -H $1
+	update_res $?
+    fi
+}
+
+
+thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $thisdir/source
+if
+  [ ! -e "${secretkey}" ]
+then
+  echo "Get ${secretkey} first!"
+  exit 4
+fi
+( mkdir -p $repodir
+  cd $repodir
+  yes | scp -i ${secretkey} -r -o StrictHostKeyChecking=no ${secretrepo_url}/* .
+) &
+#sudo -H ./ubu
+runsudo  "./ubu"
+wait
+# cat $modulelist | ${thisdir}/installmodules
+# sudo -H ./install_srl_server
+# runsudo "./install_srl_server"
+echo "Finished"
