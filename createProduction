@@ -1,0 +1,124 @@
+#!/bin/bash
+# Gathers all files necessary to run production version of NewsReader NLP pipeline
+# Cleaning up for the following modules:
+#ixa-pipe-tok (check)
+#ixa-pipe-topic (check)
+#ixa-pipe-pos (check)
+#ixa-pipe-parse (check)
+#ixa-pipe-nerc (check)
+#svm_wsd ---------------------> (hoeft niet)
+#ixa-pipe-ned (check)
+#entity-relink-pipeline
+#NWRDomainModel (check)
+#ixa-pipe-wikify (check)
+#EHU-ukb.v30 (check)
+#it_makes_sense_WSD (check)
+#EHU-corefgraph.v30 (check)
+#ixa-pipe-srl (check)
+#FBK-time.v30 (check)
+#FBK-temprel.v30 (check)
+#FBK-causalrel.v30 (check)
+#EventCoreference (check)
+#vua_factuality (check)
+#opinion_miner_deluxePP (check)
+
+mkdir production 
+
+# ixa-pipe-tok
+echo "Copying ixa-pipe-tok"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-tok/
+cp ixa-pipe-tok-2.0.0-exec.jar ../production/ixa-pipe-tok-2.0.0-exec.jar && cp ./run ../production/run
+
+# ixa-pipe-pos
+echo "Copying ixa-pipe-pos"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-pos
+for i in run ixa-pipe-pos-1.5.2-exec.jar morph-models-1.5.0 trainParams.properties ud-morph-models-1.5.0; do cp -r ./nlppmodules/ixa-pipe-pos/$i ../production/$i; done
+
+# ixa-pipe-parse
+echo "Copying ixa-pipe-parse"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-parse
+for i in run ixa-pipe-parse-1.1.2.jar parse-models/en-parser-chunking.bin/; do cp -r ./nlppmodules/ixa-pipe-parse/$i ../production/$i; done
+
+# ixa-pipe-topic
+echo "Copying ixa-pipe-topic"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-pos
+for i in run ixa-pipe-topic-1.0.3.jar default.prop jex lib repo; do cp -r ./nlppmodules/ixa-pipe-topic/$i ../production/$i; done
+
+# ixa-pipe-nerc
+echo "Copying ixa-pipe-nerc"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-nerc
+for i in run ixa-pipe-nerc-1.6.1-exec.jar nerc-models-1.5.4/en trainParams.properties; do cp -r ./nlppmodules/ixa-pipe-nerc/$i ../production/$i; done
+
+#ixa-pipe-ned
+echo "Copying ixa-pipe-ned"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-ned
+for i in run ixa-pipe-ned-1.1.6.jar lib; do cp -r ./nlppmodules/ixa-pipe-ned/$i ../production/$i; done
+
+#ixa-pipe-srl
+echo "Copying ixa-pipe-srl"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-srl
+for i in run IXA-EHU-srl/target/IXA-EHU-srl-3.0.jar IXA-EHU-srl/target/models/eng/ IXA-EHU-srl/target/PredicateMatrix/PredicateMatrix.txt; do cp -r ./nlppmodules/ixa-pipe-srl/$i ../production/$i; done
+
+#ixa-pipe-wikify
+echo "Copying ixa-pipe-wikify"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-wikify
+for i in run ixa-pipe-wikify-1.4.0.jar; do cp -r ./nlppmodules/ixa-pipe-wikify/$i ../production/$i; done
+
+#EHU-corefgraph.v30
+echo "Copying EHU-corefgraph.v30"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/EHU-corefgraph.v30
+for i in run pythonlib/ corefgraph/corefgraph/; do cp -r ./nlppmodules/EHU-corefgraph.v30/$i ../production/$i; done
+
+#vu-entity-relink
+echo "Copying ve-entity-relink"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/entity-relink-pipeline/
+cp -r ./ ../production/entity-relink-pipeline
+
+#vu-NWRDomainModel
+echo "Copying vu-NWRDomainModel"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/NWRDomainModel
+cp -r ./ ../production/NWRDomainModel
+
+#vu-event-coreference
+echo "Copying vu-event-coreference"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/EventCoreference
+for i in run lib scripts target/EventCoreference-v3.1.2.jar; do cp -r ./nlppmodules/EventCoreference/$i ../production/$i; done
+
+#vu-ims-wsd
+echo "Copying vu-ims-wsd"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/it_makes_sense_WSD
+cp -r ./ ../production/it_makes_sense_WSD
+
+#vua-factuality
+echo "Copying vua-factuality"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/vua_factuality
+cp -r ./ ../production/vua_factuality
+
+# opinion_miner_deluxePP
+echo "Copying opinion_miner_deluxePP"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/opinion_miner_deluxePP
+for i in run crf_lib extract_features_expression.py extract_features_holder.py
+extract_features_target.py extract_sequences.py match_entities_by_distance.py 
+models/models_news_en/ models/models_hotel_en/ mpqa_lexicon.py path_crf.py polarity_classifier.py polarity_models/en/ svm_light tag_file.py tag_polarity_classifier.py; do cp -r ./nlppmodules/opinion_miner_deluxePP/$i ../production/$i; done
+
+# EHU-ukb.30
+echo "Copying EHU-ukb.30"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/EHU-ukb.30
+for i in run boost_1_54_0/stage/lib/ naf_ukb/naf_ukb.pl ukb/bin/ukb_wsd wn30-ili_lkb/wn30g.bin64 wn30-ili_lkb/wn30.lex ; do cp -r ./nlppmodules/EHU-ukb.30/$i ../production/$i; done
+
+#FBK-time.v30
+echo "Copying FBK-time.v30"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/FBK-time.v30
+cp -r ./nlppmodules/FBK-time.v30/ ../production/FBK-time.v30/
+
+#FBK-temprel.v30
+echo "Copying FBK-temprel.v30"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/FBK-temprel.v30
+cp -r ./ ../production/FBK-temprel.v30/
+
+#FBK-causalrel.v30
+echo "Copying FBK-causalrel.v30"
+cd /usr/local/share/pipelines/nlpp/nlppmodules/FBK-causalrel.v30
+cp -r ./ ../production/FBK-causalrel.v30/
+
+echo "Gather production files finished"

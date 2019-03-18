@@ -8,18 +8,58 @@ RUN ./doit
 
 FROM nlpp-base-layer as nlpp-dependency-layer
 WORKDIR /root/nlpp_ubuntu_16.04/
-COPY ./custom ./
+COPY ./custom/installDependencies ./installDependencies
 RUN ./installDependencies
 
 FROM nlpp-dependency-layer as nlpp-modules-layer
+COPY ./custom/modulelist-en ./modulelist-en
 RUN cat ./modulelist-en | ./installmodules
 
-WORKDIR /usr/local/share/pipelines/
-#RUN ./cleanUp
+COPY ./custom/createProduction /usr/local/share/pipelines/nlpp/nlppmodules/createProduction
+WORKDIR /usr/local/share/pipelines/nlpp/nlppmodules
+RUN bash ./createProduction
 
 FROM nlpp-dependency-layer as nlpp-production-layer
-COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules /usr/local/share/pipelines/nlpp/nlppmodules
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-tok /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-tok
 
-WORKDIR /repo/
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-pos /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-pos
 
-CMD ./startservers
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-topic /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-topic
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-parse /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-parse
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-nerc /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-nerc
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-ned /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-ned
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/entity-relink-pipeline /usr/local/share/pipelines/nlpp/nlppmodules/entity-relink-pipeline
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/NWRDomainModel /usr/local/share/pipelines/nlpp/nlppmodules/NWRDomainModel
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-wikify /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-wikify
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/EHU-ukb.v30 /usr/local/share/pipelines/nlpp/nlppmodules/EHU-ukb.v30
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/it_makes_sense_WSD /usr/local/share/pipelines/nlpp/nlppmodules/it_makes_sense_WSD
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/EHU-corefgraph.v30 /usr/local/share/pipelines/nlpp/nlppmodules/EHU-corefgraph.v30
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-srl /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-srl
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/FBK-time.v30 /usr/local/share/pipelines/nlpp/nlppmodules/FBK-time.v30
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/FBK-temprel.v30 /usr/local/share/pipelines/nlpp/nlppmodules/FBK-temprel.v30
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/FBK-causalrel.v30 /usr/local/share/pipelines/nlpp/nlppmodules/FBK-causalrel.v30
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/EventCoreference /usr/local/share/pipelines/nlpp/nlppmodules/EventCoreference
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/vua_factuality /usr/local/share/pipelines/nlpp/nlppmodules/vua_factuality
+
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/opinion_miner_deluxePP /usr/local/share/pipelines/nlpp/nlppmodules/opinion_miner_deluxePP
+
+WORKDIR /root/nlpp_ubuntu_16.04/
+
+COPY ./modules.en2 ./run/modules.en2
+
+CMD /repo/startservers

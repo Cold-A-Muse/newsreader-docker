@@ -25,3 +25,26 @@
 15M	vua_factuality
 273M	vua-resources
 
+
+Post cleanup: 
+
+204M	EHU-corefgraph.v30
+57M	EHU-ukb.v30
+428K	entity-relink-pipeline
+14M	EventCoreference
+16M	FBK-causalrel.v30
+71M	FBK-temprel.v30
+33M	FBK-time.v30
+438M	it_makes_sense_WSD
+224M	ixa-pipe-ned
+526M	ixa-pipe-nerc
+39M	ixa-pipe-parse
+42M	ixa-pipe-pos
+301M	ixa-pipe-srl
+4.3M	ixa-pipe-tok
+142M	ixa-pipe-topic
+102M	ixa-pipe-wikify
+66M	NWRDomainModel
+155M	opinion_miner_deluxePP
+15M	vua_factuality
+
