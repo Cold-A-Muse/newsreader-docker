@@ -62,6 +62,6 @@ RUN rm -r /usr/local/share/pipelines/repo
 
 WORKDIR /root/nlpp_ubuntu_16.04/
 
-COPY ./modules.en2 ./run/modules.en2
+COPY ./modules.en /usr/local/etc/nlpp
 
 CMD /repo/startservers

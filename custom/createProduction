@@ -59,6 +59,7 @@ mkdir -p ../production/ixa-pipe-ned && for i in run langdetect.py ixa-pipe-ned-1
 #ixa-pipe-srl
 echo "Copying ixa-pipe-srl"
 cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-srl
+
 mkdir -p ../production/ixa-pipe-srl/IXA-EHU-srl/target/models/eng/ && mkdir -p ../production/ixa-pipe-srl/IXA-EHU-srl/target/PredicateMatrix/ && for i in run langdetect.py IXA-EHU-srl/target/IXA-EHU-srl-3.0.jar IXA-EHU-srl/target/models/eng/ IXA-EHU-srl/target/PredicateMatrix/PredicateMatrix.txt; do cp -r $i ../production/ixa-pipe-srl/$i; done
 
 #ixa-pipe-wikify
@@ -69,7 +70,12 @@ mkdir -p ../production/ixa-pipe-wikify && for i in run langdetect.py ixa-pipe-wi
 #EHU-corefgraph.v30
 echo "Copying EHU-corefgraph.v30"
 cd /usr/local/share/pipelines/nlpp/nlppmodules/EHU-corefgraph.v30
-mkdir -p ../production/EHU-corefgraph.v30/corefgraph/corefgraph/ && for i in run langdetect.py pythonlib/ corefgraph/corefgraph/; do cp -r $i ../production/EHU-corefgraph.v30/$i; done
+ls /usr/local/share/pipelines/nlpp/nlppmodules/EHU-corefgraph.v30/corefgraph/corefgraph/.
+
+mkdir -p ../production/EHU-corefgraph.v30/corefgraph && for i in run langdetect.py pythonlib/ ; do cp -r $i ../production/EHU-corefgraph.v30/$i; done
+cp -r /usr/local/share/pipelines/nlpp/nlppmodules/EHU-corefgraph.v30/corefgraph/corefgraph/. ../production/EHU-corefgraph.v30/corefgraph/corefgraph
+echo "After copying EHU-corefgraph.v30 looks like: "
+ls ../production/EHU-corefgraph.v30
 
 #vu-entity-relink
 echo "Copying vu-entity-relink"
@@ -102,9 +108,10 @@ cd /usr/local/share/pipelines/nlpp/nlppmodules/opinion_miner_deluxePP
 mkdir -p ../production/opinion_miner_deluxePP/models/models_news_en/ && mkdir -p ../production/opinion_miner_deluxePP/models/models_hotel_en/ && mkdir -p ../production/opinion_miner_deluxePP/polarity_models/en/ && for i in run crf_lib langdetect.py extract_features_expression.py extract_features_holder.py extract_features_target.py extract_sequences.py match_entities_by_distance.py models/models_news_en/ models/models_hotel_en/ mpqa_lexicon.py path_crf.py polarity_classifier.py polarity_models/en/ svm_light tag_file.py tag_polarity_classifier.py; do cp -r $i ../production/opinion_miner_deluxePP/$i; done
 
 # EHU-ukb.30
-echo "Copying EHU-ukb.30"
+echo "Copying EHU-ukb.30 V2"
 cd /usr/local/share/pipelines/nlpp/nlppmodules/EHU-ukb.v30/
-mkdir -p ../production/EHU-ukb.v30/boost_1_54_0/stage/lib/ && mkdir -p ../production/EHU-ukb.v30/naf_ukb/ && mkdir -p ../production/EHU-ukb.v30/ukb/bin/ && mkdir -p ../production/EHU-ukb.v30/wn30-ili_lkb  && for i in run boost_1_54_0/stage/lib/ langdetect.py naf_ukb/naf_ukb.pl ukb/bin/ukb_wsd wn30-ili_lkb/wn30g.bin64 wn30-ili_lkb/wn30.lex ; do cp -r $i ../production/EHU-ukb.v30/$i; done
+mkdir -p ../production/EHU-ukb.v30/boost_1_54_0/stage/ && mkdir -p ../production/EHU-ukb.v30/naf_ukb/ && mkdir -p ../production/EHU-ukb.v30/ukb/bin/ && mkdir -p ../production/EHU-ukb.v30/wn30-ili_lkb  && for i in run boost_1_54_0/stage/lib langdetect.py naf_ukb/naf_ukb.pl ukb/bin/ukb_wsd wn30-ili_lkb/wn30g.bin64 wn30-ili_lkb/wn30.lex ; do cp -r $i ../production/EHU-ukb.v30/$i; done
+ls ../production/EHU-ukb.v30/
 
 #FBK-time.v30
 echo "Copying FBK-time.v30"
