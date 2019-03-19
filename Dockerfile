@@ -28,7 +28,7 @@ COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/produ
 
 COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-parse /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-parse
 
-COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-nerc /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-nerc
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-nerc/ /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-nerc/
 
 COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-ned /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-ned
 
@@ -57,6 +57,8 @@ COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/produ
 COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/vua_factuality /usr/local/share/pipelines/nlpp/nlppmodules/vua_factuality
 
 COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/opinion_miner_deluxePP /usr/local/share/pipelines/nlpp/nlppmodules/opinion_miner_deluxePP
+
+RUN rm -r /usr/local/share/pipelines/repo
 
 WORKDIR /root/nlpp_ubuntu_16.04/
 

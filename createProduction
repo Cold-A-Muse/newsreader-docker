@@ -47,7 +47,7 @@ for i in run ixa-pipe-topic-1.0.3.jar default.prop jex lib repo; do cp -r ./nlpp
 # ixa-pipe-nerc
 echo "Copying ixa-pipe-nerc"
 cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-nerc
-for i in run ixa-pipe-nerc-1.6.1-exec.jar nerc-models-1.5.4/en trainParams.properties; do cp -r ./nlppmodules/ixa-pipe-nerc/$i ../production/$i; done
+for i in run ixa-pipe-nerc-1.6.1-exec.jar nerc-models-1.5.4/en/conll03/ trainParams.properties; do cp -r ./nlppmodules/ixa-pipe-nerc/$i ../production/$i; done
 
 #ixa-pipe-ned
 echo "Copying ixa-pipe-ned"

@@ -49,8 +49,8 @@ mkdir -p ../production/ixa-pipe-topic && for i in run langdetect.py ixa-pipe-top
 echo "Copying ixa-pipe-nerc"
 cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-nerc
 mkdir -p ../production/ixa-pipe-nerc && for i in run langdetect.py ixa-pipe-nerc-1.6.1-exec.jar  trainParams.properties; do cp -r $i ../production/ixa-pipe-nerc/$i; done
-mkdir -p ../production/ixa-pipe-nerc/nerc-models-1.5.4/en/conll03/ && cp -r nerc-models-1.5.4/en/conll03/ ../production/ixa-pipe-nerc/nerc-models-1.5.4/en/conll03/
-
+mkdir -p ../production/ixa-pipe-nerc/nerc-models-1.5.4/en/conll03/ && cp -r nerc-models-1.5.4/en/conll03 ../production/ixa-pipe-nerc/nerc-models-1.5.4/en/
+ls 
 #ixa-pipe-ned
 echo "Copying ixa-pipe-ned"
 cd /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-ned
