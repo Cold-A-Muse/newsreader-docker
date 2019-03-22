@@ -22,6 +22,8 @@
 #vua_factuality (check)
 #opinion_miner_deluxePP (check)
 
+# Remove langdetect bs: ixa-pipe-tok, topic, nerc, ned wikify, EventCoreference
+
 mkdir production 
 
 # ixa-pipe-tok
@@ -85,7 +87,8 @@ cp -r ./ ../production/NWRDomainModel
 #vu-event-coreference
 echo "Copying vu-event-coreference"
 cd /usr/local/share/pipelines/nlpp/nlppmodules/EventCoreference
-mkdir -p ../production/EventCoreference/target/ && cp -r ./ ../production/EventCoreference #for i in run langdetect.py lib scripts target/EventCoreference-v3.1.2.jar; do cp -r $i ../production/EventCoreference/$i; done
+mkdir -p ../production/EventCoreference/target/ && for i in run langdetect.py lib scripts target/EventCoreference-v3.1.2.jar; do cp -r $i ../production/EventCoreference/$i; done
+# cp -r ./ ../production/EventCoreference #
 
 #vu-ims-wsd
 echo "Copying vu-ims-wsd"

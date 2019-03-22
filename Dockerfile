@@ -29,7 +29,7 @@ COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/produ
 
 COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-pos /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-pos
 
-COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-topic /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-topic
+#COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-topic /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-topic
 
 COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-parse /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-parse
 
@@ -65,13 +65,9 @@ COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/produ
 
 COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/vua-resources /usr/local/share/pipelines/nlpp/nlppmodules/vua-resources
 
-#RUN rm -r /usr/local/share/pipelines/repo
-
-
-
 COPY ./custom/modules.en /usr/local/etc/nlpp
 COPY ./custom/nlpp.sh /root/nlpp_ubuntu_16.04/run/nlpp2 
-#COPY ./runVuEventCoreferenceResolution /usr/local/share/pipelines/nlpp/nlppmodules/EventCoreference/run
-
-
+COPY ./custom/iexec_nlpp.sh /root/nlpp_ubuntu_16.04/run/iexec_nlpp
+COPY ./custom/runTokenizerWithRawText /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-tok/run
+WORKDIR /root/nlpp_ubuntu_16.04/run/
 CMD /bin/bash

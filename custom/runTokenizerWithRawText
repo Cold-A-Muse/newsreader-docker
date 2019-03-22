@@ -1,0 +1,22 @@
+#!/bin/bash
+modname=ixa-pipe-tok
+#
+# Find the path to this module
+#
+if
+  [ -z ${MODROOT+x} ]
+then
+  # Find out path ourselves
+  thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+else
+  thisdir=$MODROOT/$modname
+fi
+scriptpath=${thisdir}/run
+
+#
+# Run the module
+#
+JARFILE=ixa-pipe-tok-2.0.0-exec.jar
+cd $thisdir
+java -Xmx1000m  -jar $JARFILE tok -l en
+

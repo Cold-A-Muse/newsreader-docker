@@ -77,16 +77,11 @@ function run_pipeline () {
 }
 
 cd $workdir
-cat >in.naf
-export naflang=`cat in.naf | $bindir/langdetect.py`
-if
-    [ "$naflang" != "nl" -a "$naflang" != "en" ]
-then
-    echo "Language $naflang is not supported." >&2
-    exit 4
-fi
+curl $1 > in.naf 
+#cat >in.naf
+
 res=0
-run_pipeline $naflang
+run_pipeline "en"
 cd $oldd
 if
     [ $res -gt 0 ]
@@ -94,11 +89,8 @@ then
     echo "Pipeline has not been completed due to an error." >&2
     exit 4
 fi
-cat ${workdir}/out.naf
-if
-    [ -z ${keep_temp+x} ]
-then
-    rm -rf $workdir
-else
-    echo "$workdir kept" >&2
-fi
+#cat ${workdir}/out.naf
+#mkdir -p /iexec/ && cp ${workdir}/out.naf /iexec/output.xml && cp ${workdir}/in.naf /iexec/original.txt
+cp ${workdir}/out.naf /iexec/output.xml && cp ${workdir}/in.naf /iexec/original.txt
+echo "Processing finished. Results can be found in /iexec/:"
+ls /iexec/
