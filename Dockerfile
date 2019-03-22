@@ -58,10 +58,15 @@ COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/produ
 
 COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/opinion_miner_deluxePP /usr/local/share/pipelines/nlpp/nlppmodules/opinion_miner_deluxePP
 
-RUN rm -r /usr/local/share/pipelines/repo
+COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/vua-resources /usr/local/share/pipelines/nlpp/nlppmodules/vua-resources
+
+#RUN rm -r /usr/local/share/pipelines/repo
 
 WORKDIR /root/nlpp_ubuntu_16.04/
 
 COPY ./modules.en /usr/local/etc/nlpp
+COPY ./nlpp.sh /root/nlpp_ubuntu_16.04/run/nlpp2 
+COPY ./runVuEventCoreferenceResolution /usr/local/share/pipelines/nlpp/nlppmodules/EventCoreference/run
+
 
 CMD /repo/startservers

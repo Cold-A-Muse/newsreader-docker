@@ -1,0 +1,10 @@
+#!/bin/bash
+modname=EventCoreference
+
+thisdir=/usr/local/share/pipelines/nlpp/nlppmodules/EventCoreference/
+
+cd $thisdir
+
+script="scripts/event-coreference-en.sh"
+bash $script
+
