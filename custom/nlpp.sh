@@ -53,7 +53,7 @@ function runmodule {
 # Assume current dir is work-dir, contains in.naf.
 function run_pipeline () {
     
-    nohup java -Xms2500m -cp /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-srl/IXA-EHU-srl/target/IXA-EHU-srl-3.0.jar ixa.srl.SRLServer en >&2 &
+    nohup java -Xms2500m -cp /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-srl/IXA-EHU-srl/target/IXA-EHU-srl-3.0.jar ixa.srl.SRLServer en >&2
     naflang=$1
     modulelist=${confdir}/modules.${naflang}
     lastfile=in.naf

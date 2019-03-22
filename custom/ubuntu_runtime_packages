@@ -1,0 +1,15 @@
+curl
+gawk
+default-jre
+libxft2
+libxml-libxml-perl
+libxss1
+locales
+net-tools
+perl
+python3-all
+python3-pip
+supervisor
+tcsh
+timbl
+unzip

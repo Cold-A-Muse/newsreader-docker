@@ -19,7 +19,12 @@ COPY ./custom/createProduction /usr/local/share/pipelines/nlpp/nlppmodules/creat
 WORKDIR /usr/local/share/pipelines/nlpp/nlppmodules
 RUN bash ./createProduction
 
-FROM nlpp-dependency-layer as nlpp-production-layer
+FROM nlpp-base-layer as nlpp-production-layer
+WORKDIR /root/nlpp_ubuntu_16.04/
+COPY ./custom/ubuntu_runtime_packages ./ubuntu_packages
+COPY ./custom/installProductionDependencies ./installProductionDependencies
+RUN ./installProductionDependencies
+
 COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-tok /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-tok
 
 COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/production/ixa-pipe-pos /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-pos
@@ -62,11 +67,11 @@ COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/produ
 
 #RUN rm -r /usr/local/share/pipelines/repo
 
-WORKDIR /root/nlpp_ubuntu_16.04/
-
-COPY ./modules.en /usr/local/etc/nlpp
-COPY ./nlpp.sh /root/nlpp_ubuntu_16.04/run/nlpp2 
-COPY ./runVuEventCoreferenceResolution /usr/local/share/pipelines/nlpp/nlppmodules/EventCoreference/run
 
 
-CMD /repo/startservers
+COPY ./custom/modules.en /usr/local/etc/nlpp
+COPY ./custom/nlpp.sh /root/nlpp_ubuntu_16.04/run/nlpp2 
+#COPY ./runVuEventCoreferenceResolution /usr/local/share/pipelines/nlpp/nlppmodules/EventCoreference/run
+
+
+CMD /bin/bash
