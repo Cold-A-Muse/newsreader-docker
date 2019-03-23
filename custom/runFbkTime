@@ -1,0 +1,72 @@
+#!/bin/bash
+modname=FBK-time.v30
+#
+# Find the path to this module
+#
+if
+  [ -z ${MODROOT+x} ]
+then
+  # Find out path ourselves
+  thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+else
+  thisdir=$MODROOT/$modname
+fi
+thisscript=${thisdir}/run
+export thisdir
+#scratchDir=/tmp
+scratchDir=`mktemp -d /tmp/FBK-time.XXXXXX`
+
+# NAFFILE=$1
+
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+cd $DIR
+
+RANDOM=`bash -c 'echo $RANDOM'`
+#JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.25.x86_64
+#JAVA_HOME=/usr
+#YAMCHA=./tools
+
+FILETXP=$scratchDir/$RANDOM-TimePro.txp
+CHUNKIN=$scratchDir/$RANDOM-TimePro.naf
+FILEOUT=$scratchDir/$RANDOM-TimeProOUT.txp
+TIMEPRONORMIN=$scratchDir/$RANDOM-TimeProNormIN.txp
+
+# cat $NAFFILE > $CHUNKIN
+cat > $CHUNKIN
+
+BEGINTIME=`date '+%Y-%m-%dT%H:%M:%S%z'`
+
+cat $CHUNKIN | java -cp "lib/jdom-2.0.5.jar:lib/kaflib-naf-1.1.9.jar:lib/NAFtoTXP_v11.jar" eu.fbk.newsreader.naf.NAFtoTXP_v11 $FILETXP chunk+entity timex
+
+
+#echo "Saving... $FILETXP"
+tail -n +4 $FILETXP | awk -f resources/english-rules > $FILEOUT
+head -n +4 $FILETXP > $TIMEPRONORMIN
+
+cat $FILEOUT | "$DIR"/tools/yamcha-0.33/usr/local/bin/yamcha -m models/tempeval3_silver-data.model >> $TIMEPRONORMIN
+cat $TIMEPRONORMIN | java -cp "lib/scala-library.jar:lib/timenorm-0.9.1-SNAPSHOT.jar:lib/threetenbp-0.8.1.jar:lib/TimeProNorm_v2.5.jar" eu.fbk.timePro.TimeProNormApply $FILETXP
+
+
+rm $FILEOUT
+rm $TIMEPRONORMIN
+
+cat $CHUNKIN | java -cp "lib/jdom-2.0.5.jar:lib/kaflib-naf-1.1.9.jar:lib/NAFtoTXP_v11.jar" eu.fbk.newsreader.naf.NAFtoTXP_v11 $FILEOUT chunk+morpho+timex+event eval
+
+java -Dfile.encoding=UTF8 -cp "lib/TXPtoNAF_v5.jar:lib/jdom-2.0.5.jar:lib/kaflib-naf-1.1.9.jar" eu.fbk.newsreader.naf.TXPtoNAF_v4 $CHUNKIN $FILETXP "$BEGINTIME" TIMEX3 | java -Dfile.encoding=UTF8 -cp "lib/kaflib-naf-1.1.9.jar:lib/jdom-2.0.5.jar:lib/TimeProEmptyTimex_v2.jar" eu.fbk.timepro.TimeProEmptyTimex $FILEOUT
+#java -Dfile.encoding=UTF8 -cp "lib/TXPtoNAF_v3.jar:lib/jdom-2.0.5.jar:lib/kaflib-naf-1.0.2.jar" eu.fbk.newsreader.naf.TXPtoNAF_v3 $CHUNKIN $FILETXP "$BEGINTIME" TIMEX3
+
+#cat $FILETXP.out
+rm $FILETXP
+#rm $FILETXP.out
+rm $CHUNKIN
+rm $FILEOUT
+rm -rf $scratchDir
+

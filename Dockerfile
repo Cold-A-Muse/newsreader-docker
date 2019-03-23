@@ -67,7 +67,17 @@ COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/produ
 
 COPY ./custom/modules.en /usr/local/etc/nlpp
 COPY ./custom/nlpp.sh /root/nlpp_ubuntu_16.04/run/nlpp2 
-COPY ./custom/iexec_nlpp.sh /root/nlpp_ubuntu_16.04/run/iexec_nlpp
+COPY ./custom/iexec_nlpp.sh /root/nlpp_ubuntu_16.04/run/iexec_nlpp.sh
 COPY ./custom/runTokenizerWithRawText /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-tok/run
+COPY ./custom/runIxaNerc /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-nerc/run
+COPY ./custom/runIxaNed /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-ned/run
+COPY ./custom/runIxaWikify /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-wikify/run
+COPY ./custom/runFbkCausalRels /usr/local/share/pipelines/nlpp/nlppmodules/FBK-causalrel.v30/run
+COPY ./custom/runFbkTempRels /usr/local/share/pipelines/nlpp/nlppmodules/FBK-temprel.v30/run
+COPY ./custom/runFbkTime /usr/local/share/pipelines/nlpp/nlppmodules/FBK-time.v30/run
+COPY ./custom/runVuaFactuality /usr/local/share/pipelines/nlpp/nlppmodules/vua_factuality/run
+COPY ./custom/runOpinionMiner /usr/local/share/pipelines/nlpp/nlppmodules/opinion_miner_deluxePP/run
+
+RUN mkdir -p /tmp/
 WORKDIR /root/nlpp_ubuntu_16.04/run/
 CMD /bin/bash

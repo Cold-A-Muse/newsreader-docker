@@ -1,0 +1,71 @@
+#!/bin/bash
+modname=ixa-pipe-ned
+#
+# Find the path to this module
+#
+if
+  [ -z ${MODROOT+x} ]
+then
+  # Find out path ourselves
+  thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+else
+  thisdir=$MODROOT/$modname
+fi
+thisscript=${thisdir}/run
+cd $thisdir
+
+# Need to set:
+# h: URL of Spotlight host
+# p: Port for Spotlight
+# w: Location of wikipedia-db
+opts=""
+while getopts h:p:w opt; do
+   case $opt in
+     h) SPOTLIGHTHOST=$OPTARG
+        ;;
+     p) SPOTLIGHTPORT=$OPTARG
+        ;;
+     w) WIKIDB=$OPTARG
+        ;;
+     *) echo "Unknown option." 
+        exit 1
+        ;;
+    esac
+done
+
+
+spotlighthost_def=localhost
+SPOTLIGHTHOST=${SPOTLIGHTHOST:-${spotlighthost_def}}
+
+case ${NAFLANG} in
+   de) spotlightport_def=2010
+       ;;
+   en) spotlightport_def=2020
+       ;;
+   es) spotlightport_def=2030
+       ;;
+   fr) spotlightport_def=2040
+       ;;
+   it) spotlightport_def=2050
+       ;;
+   nl) spotlightport_def=2060
+       ;;
+   *) spotlightport_def=2020
+       ;;
+esac
+SPOTLIGHTPORT=${SPOTLIGHTPORT:-${spotlightport_def}}
+
+WIKIDB_DEF=${thisdir}/lib/wikipedia-db
+WIKIDB=${WIKIDB:-${WIKIDB_DEF}}
+if
+  [ "${WIKIDB}x" == "x" ] || [ "${NAFLANG}" == "en" ]
+then
+  wikip_arg=""
+else 
+  wikip_arg="-i ${WIKIDB} -n ${NAFLANG}En"
+fi
+
+JARFILE=ixa-pipe-ned-1.1.6.jar
+cat | java -Xmx1000m -jar $JARFILE -H "http://"${SPOTLIGHTHOST} -p ${SPOTLIGHTPORT} -e candidates ${wikip_arg} 
+# echo  java -Xmx1000m -jar $JARFILE -H ${spotlighthost} -p ${spotlightport} -e candidates ${wikip_arg} 
+

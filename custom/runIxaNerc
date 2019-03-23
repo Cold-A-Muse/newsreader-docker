@@ -1,0 +1,37 @@
+#!/bin/bash
+modname=ixa-pipe-nerc
+#
+# Find the path to this module
+#
+if
+  [ -z ${MODROOT+x} ]
+then
+  # Find out path ourselves
+  thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+else
+  thisdir=$MODROOT/$modname
+fi
+thisscript=${thisdir}/run
+#
+# Get command-line options
+#
+opts=""
+while getopts m: opt; do
+   case $opt in
+     m) NERC_MODEL=$OPTARG
+        ;;
+     *) echo "Unknown option." 
+        exit 1
+        ;;
+    esac
+done
+
+MOD_DEFAULT=en/conll03/en-best-clusters-conll03.bin
+NERC_MODEL=${NERC_MODEL:-$MOD_DEFAULT}
+#
+# Run it
+#
+JARFILE=ixa-pipe-nerc-1.6.1-exec.jar
+cd $thisdir
+modelsdir=$thisdir/nerc-models-1.5.4
+java -Xmx2000m  -jar $JARFILE tag -m $modelsdir/$NERC_MODEL

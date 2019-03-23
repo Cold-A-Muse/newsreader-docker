@@ -1,0 +1,19 @@
+#!/bin/bash
+modname=vua_factuality
+#
+# Find the path to this module
+#
+if
+  [ -z ${MODROOT+x} ]
+then
+  # Find out path ourselves
+  thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+else
+  thisdir=$MODROOT/$modname
+fi
+thisscript=${thisdir}/run
+cd $thisdir
+timblpath=`which timbl`
+tmpDir=`mktemp -d /tmp/vua_factuality.XXXXXX`
+python $thisdir/vua_factuality_naf_wrapper.py -t $timblpath -p $thisdir/ $tmpDir/
+rm -rf $tmpDir

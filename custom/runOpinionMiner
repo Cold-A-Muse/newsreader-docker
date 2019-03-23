@@ -1,0 +1,44 @@
+#!/bin/bash
+thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd ${thisdir}
+# Options:
+# "-c <loc>": loc is location of crf+.
+# "-d <loc>": loc is trainingsdata used.
+# "-s <loc>": loc is location of svm light.
+function get_options () {
+    local OPTIND opt=""
+    while getopts a:: opt; do
+	case $opt in
+	    c) crf_home=$OPTARG
+               ;;
+	    d) data=$OPTARG
+               ;;
+	    s) svm_light_home=$OPTARG
+               ;;
+	    *) echo "Unknown option." 
+               exit 1
+               ;;
+	esac
+    done
+}
+
+
+get_options
+#
+# Dataset
+#
+data_default="news"
+data=${data:-${data_default}}
+#
+# CRF-HOME
+#
+crf_home_default=${thisdir}/crf_lib/CRF++-0.58
+export crf_home=${crf_home:-${crf_home_default}}
+#
+# SVM-LIGHT
+#
+svm_light_home_default=${thisdir}/svm_light
+export svm_light_home=${svm_light__home:-${svm_light_home_default}}
+
+python tag_file.py -polarity -d ${data}
+

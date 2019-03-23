@@ -1,0 +1,62 @@
+#!/bin/bash
+modname=ixa-pipe-wikify
+#
+# Find the path to this module
+#
+if
+  [ -z ${MODROOT+x} ]
+then
+  # Find out path ourselves
+  thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+else
+  thisdir=$MODROOT/$modname
+fi
+thisscript=${thisdir}/run
+
+cd $thisdir
+# Need to set:
+# 1. URL of Spotlight host
+# 2. Port for Spotlight
+# 3. Location of wikipedia-db
+opts=""
+while getopts h:p:w opt; do
+   case $opt in
+     h) spotlighthost=$OPTARG
+        ;;
+     p) spotlightport=$OPTARG
+        ;;
+     w) WIKIDB=$OPTARG
+        ;;
+     *) echo "Unknown option." 
+        exit 1
+        ;;
+    esac
+done
+
+
+spotlighthost_def=localhost
+SPOTLIGHTHOST=${SPOTLIGHTHOST:-${spotlighthost_def}}
+
+case ${NAFLANG} in
+   de) spotlightport_def=2010
+       ;;
+   en) spotlightport_def=2020
+       ;;
+   es) spotlightport_def=2030
+       ;;
+   fr) spotlightport_def=2040
+       ;;
+   it) spotlightport_def=2050
+       ;;
+   nl) spotlightport_def=2060
+       ;;
+   *) spotlightport_def=2020
+       ;;
+esac
+SPOTLIGHTPORT=${SPOTLIGHTPORT:-${spotlightport_def}}
+
+
+cd ${thisdir}
+JARFILE=ixa-pipe-wikify-1.4.0.jar
+cat | java -Xmx1000m -jar $JARFILE -s "http://"${SPOTLIGHTHOST} -p ${SPOTLIGHTPORT} 
+

@@ -1,0 +1,37 @@
+#!/bin/bash -f
+thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $thisdir
+
+scratchDir=`mktemp -d /tmp/FBK-CAUSAL.XXXXXX`
+
+#SOURCE="${BASH_SOURCE[0]}"
+#while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink 
+#  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+#  SOURCE="$(readlink "$SOURCE")"
+#  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located 
+#done
+#DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+DIR=$thisdir
+cd $DIR
+
+
+RANDOM=`bash -c 'echo $RANDOM'`
+RANDOMFIX=$RANDOM
+
+FILETXP=$scratchDir/$RANDOMFIX-Causalrel
+NAF=$scratchDir/$RANDOMFIX-Causalrel.naf
+
+cat  > $NAF
+
+BEGINTIME=`date '+%Y-%m-%dT%H:%M:%S%z'`
+
+cat $NAF | java -cp "lib/kaflib-naf-1.1.9.jar:lib/NAFtoTXP_v11.jar:lib/jdom-2.0.5.jar" eu.fbk.newsreader.naf.NAFtoTXP_v11 $FILETXP chunk+entity+event+timex+connectives+srl+dep+morpho+coevent+dct+main_verb+tlink train
+
+sh causalrel-pipeline-per-file.sh $FILETXP $DIR/tools/ $scratchDir
+
+java -Dfile.encoding=UTF8 -cp "lib/TXPtoNAF_v4.jar:lib/jdom-2.0.5.jar:lib/kaflib-naf-1.1.9.jar" eu.fbk.newsreader.naf.TXPtoNAF_v4 $NAF "$FILETXP"_clinks "$BEGINTIME" CLINK
+
+rm $FILETXP
+rm "$FILETXP"_clinks
+rm $NAF
+

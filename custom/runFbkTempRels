@@ -1,0 +1,51 @@
+#!/bin/bash
+modname=FBK-temprel.v30
+#
+# Find the path to this module
+#
+if
+  [ -z ${MODROOT+x} ]
+then
+  # Find out path ourselves
+  thisdir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+else
+  thisdir=$MODROOT/$modname
+fi
+thisscript=${thisdir}/run
+export thisdir
+scratchDir=`mktemp -d /tmp/FBK-temprel.XXXXXX`
+# NAFFILE=$1
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink                                                                                                                             
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located                                              
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+cd $DIR
+
+
+RANDOM=`bash -c 'echo $RANDOM'`
+
+RANDOMFIX=$RANDOM
+FILETXP=$scratchDir/$RANDOMFIX-Temprel
+NAF=$scratchDir/$RANDOMFIX-Temprel.naf
+
+# cat $NAFFILE > $NAF
+cat  > $NAF
+
+BEGINTIME=`date '+%Y-%m-%dT%H:%M:%S%z'`
+
+cat $NAF | java -cp "lib/kaflib-naf-1.1.9.jar:lib/NAFtoTXP_v11.jar:lib/jdom-2.0.5.jar" eu.fbk.newsreader.naf.NAFtoTXP_v11 $FILETXP chunk+entity+event+timex+connectives+srl+dep+morpho+coevent+dct+main_verb+pairs eval
+
+$DIR/temprel-pipeline-per-file-NWR $FILETXP $DIR/tools/ $scratchDir $RANDOMFIX 1-step
+
+java -Dfile.encoding=UTF8 -cp "lib/TXPtoNAF_v4.jar:lib/jdom-2.0.5.jar:lib/kaflib-naf-1.1.9.jar" eu.fbk.newsreader.naf.TXPtoNAF_v4 $NAF "$scratchDir"/"$RANDOMFIX".tlinks "$BEGINTIME" TLINK | java -Dfile.encoding=UTF8 -cp "tools/jython/jython.jar:lib/kaflib-naf-1.1.9.jar:lib/jdom-2.0.5.jar:lib/PredicateTimeAnchor.jar" eu.fbk.newsreader.TimeAnchor.PredicateTimeAnchor timeA $FILETXP
+
+rm $FILETXP
+rm "$scratchDir"/"$RANDOMFIX".tlinks
+rm $NAF
+rm -rf $scratchDir
+
