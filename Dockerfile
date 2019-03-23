@@ -75,6 +75,7 @@ COPY ./custom/runIxaWikify /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-
 COPY ./custom/runFbkCausalRels /usr/local/share/pipelines/nlpp/nlppmodules/FBK-causalrel.v30/run
 COPY ./custom/runFbkTempRels /usr/local/share/pipelines/nlpp/nlppmodules/FBK-temprel.v30/run
 COPY ./custom/runFbkTime /usr/local/share/pipelines/nlpp/nlppmodules/FBK-time.v30/run
+COPY ./custom/runVuEventCoreferenceResolution /usr/local/share/pipelines/nlpp/nlppmodules/EventCoreference/run
 COPY ./custom/runVuaFactuality /usr/local/share/pipelines/nlpp/nlppmodules/vua_factuality/run
 COPY ./custom/runOpinionMiner /usr/local/share/pipelines/nlpp/nlppmodules/opinion_miner_deluxePP/run
 
