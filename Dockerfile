@@ -67,7 +67,7 @@ COPY --from=nlpp-modules-layer /usr/local/share/pipelines/nlpp/nlppmodules/produ
 
 COPY ./custom/modules.en /usr/local/etc/nlpp
 COPY ./custom/nlpp.sh /root/nlpp_ubuntu_16.04/run/nlpp2 
-COPY ./custom/kafbuilder.py /usr/loca/share/pipelines/nlpp/nlppmodules/EHU-corefgraph.v30/corefgraph/corefgraph/graph/kafbuilder.py
+COPY ./custom/kafbuilder.py /usr/local/share/pipelines/nlpp/nlppmodules/EHU-corefgraph.v30/corefgraph/corefgraph/graph/kafbuilder.py
 COPY ./custom/runTokenizerWithRawText /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-tok/run
 COPY ./custom/runIxaNerc /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-nerc/run
 COPY ./custom/runIxaNed /usr/local/share/pipelines/nlpp/nlppmodules/ixa-pipe-ned/run
