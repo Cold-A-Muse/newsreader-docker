@@ -36,7 +36,7 @@ source $initscript
 if
     [ -z ${workdir+x} ]
 then
-    workdir=`mktemp -d -t nlpp.XXXXXX`
+    workdir=`mktemp -d /tmp/nlpp.XXXXXX`
 fi
 res=0
 
@@ -57,6 +57,7 @@ function run_pipeline () {
     naflang=$1
     modulelist=${confdir}/modules.${naflang}
     lastfile=in.naf
+    cp ./in.naf /iexec/original.txt 
     while
 	IFS=' ' read -r module || [[ -n "$module" ]]
     do
@@ -73,6 +74,7 @@ function run_pipeline () {
 	lastfile=${module}.naf
     done < ${modulelist}
     ln -s ${lastfile} out.naf
+    cp ./out.naf /iexec/output.xml
 	
 }
 
@@ -90,7 +92,7 @@ then
     exit 4
 fi
 #cat ${workdir}/out.naf
-#mkdir -p /iexec/ && cp ${workdir}/out.naf /iexec/output.xml && cp ${workdir}/in.naf /iexec/original.txt
+#mkdir -p /iexec/ 
 cp ${workdir}/out.naf /iexec/output.xml && cp ${workdir}/in.naf /iexec/original.txt
 echo "Processing finished. Results can be found in /iexec/:"
 ls /iexec/
